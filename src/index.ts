@@ -26,7 +26,9 @@ function benchloop<CTX = any> ( options: Partial<Options<CTX>> | Function ): Pro
 
   const optsCustom = Utils.isFunction ( options ) ? { fn: options } : options || {},
         opts: Options<CTX> = Object.assign ( {}, benchloop.defaultOptions, optsCustom ),
-        ctx: CTX = opts.ctx ();
+        ctx: CTX = opts.ctx (),
+        {fn} = opts,
+        noop = ( ...args: any[] ) => {};
 
   let profile = 0,
       profiles: number[] = [];
@@ -39,9 +41,15 @@ function benchloop<CTX = any> ( options: Partial<Options<CTX>> | Function ): Pro
 
     Profile.time ();
 
-    opts.fn ( ctx, i );
+    noop ( ctx, i );
 
-    const elapsed = Profile.timeEnd ();
+    const elapsedNoop = Profile.timeEnd ();
+
+    Profile.time ();
+
+    fn ( ctx, i );
+
+    const elapsed = Math.max ( 0, Profile.timeEnd () - elapsedNoop );
 
     profile += elapsed;
     profiles.push ( elapsed );
