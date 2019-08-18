@@ -39,7 +39,7 @@ function benchloop<CTX = any> ( options: Partial<Options<CTX>> | Function ): Pro
 
     Profile.time ();
 
-    opts.fn ( ctx );
+    opts.fn ( ctx, i );
 
     const elapsed = Profile.timeEnd ();
 

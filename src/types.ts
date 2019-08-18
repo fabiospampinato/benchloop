@@ -14,7 +14,7 @@ type Options<CTX> = {
   after: Hook<CTX>,
   afterEach: Hook<CTX>,
   ctx: () => CTX,
-  fn: Hook<CTX>
+  fn: ( ctx: CTX, iteration: number ) => void
 };
 
 type ProfileData = {
