@@ -27,7 +27,7 @@ const Profile = {
     return pretty ( time, {
       compact: true,
       formatSubMilliseconds: true
-    }).slice ( 1 );
+    }).replace ( '~', '' );
 
   }
 
