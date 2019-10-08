@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "clean": "rimraf dist",
-    "compile": "tsc --skipLibCheck && tstei",
+    "compile": "tsc --skipLibCheck",
     "compile:watch": "tsc --skipLibCheck --watch",
     "test": "node test",
     "prepublishOnly": "npm run clean && npm run compile"
@@ -40,7 +40,6 @@
   "devDependencies": {
     "@types/node": "^12.7.2",
     "rimraf": "^3.0.0",
-    "typescript": "^3.5.3",
-    "typescript-transform-export-interop": "^1.0.2"
+    "typescript": "^3.5.3"
   }
 }
