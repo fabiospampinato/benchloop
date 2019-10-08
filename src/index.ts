@@ -148,7 +148,7 @@ group.skip = function skip ( name: string, fn: Function ): void {
 
 };
 
-benchloop.group = group;
+benchloop['group'] = group;
 
 /* SUMMARY */
 
@@ -167,5 +167,4 @@ benchloop.defaultOptions = defaultOptions;
 
 /* EXPORT */
 
-export {group};
 export default benchloop;
