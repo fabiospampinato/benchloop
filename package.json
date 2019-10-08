@@ -30,6 +30,7 @@
   ],
   "dependencies": {
     "chalk": "^2.4.2",
+    "conf-merge": "^1.0.6",
     "ervy": "git://github.com/fabiospampinato/ervy#ce5b41657fcfaeb8951694a2d951d18dd919aa20",
     "percentile": "^1.2.2",
     "performance-now": "^2.1.0",

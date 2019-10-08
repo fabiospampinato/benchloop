@@ -20,31 +20,44 @@ The following interface is provided:
 type LogType = 'chart' | 'extended' | 'compact' | false;
 
 type Hook<CTX> = ( ctx: CTX ) => void;
+type HookAfter<CTX, DATA> = ( ctx: CTX, data: DATA ) => void;
 
-type Options<CTX> = {
+type ProfileOptions<CTX> = {
   name: string,
   iterations: number,
   log: LogType,
+  groups: string[],
+  only: boolean,
+  skip: boolean,
+  special: boolean,
   before: Hook<CTX>,
   beforeEach: Hook<CTX>,
-  after: Hook<CTX>,
+  after: HookAfter<CTX, ProfileData<CTX>>,
   afterEach: Hook<CTX>,
   ctx: () => CTX,
-  fn: Hook<CTX>
+  fn: ( ctx: CTX, iteration: number ) => void
 };
 
-type ProfileData = {
-  name: string,
+type ProfileData<CTX> = {
+  options: ProfileOptions<CTX>,
   iterations: number,
   elapsed: number,
   profiles: number[]
 };
 
-function benchloop<CTX> ( options?: Partial<Options<CTX>> | Function ): ProfileData;
+function benchloop<CTX = any> ( options: Partial<ProfileOptions<CTX>> | ProfileOptions<CTX>['fn'] ): void;
+function group ( group: string, fn: Function ): void;
+
+benchloop.only = benchloop;
+benchloop.skip = benchloop;
+benchloop.group = group;
+benchloop.group.only = group;
+benchloop.group.skip = group;
+
 benchloop.defaultOptions: Options;
 ```
 
-You can use the library like so:
+You can use this library like so:
 
 ```ts
 import benchloop from 'benchloop';
@@ -57,9 +70,32 @@ benchloop ({
     }
   }
 });
+
+benchloop.group ( 'MyGroup', () => { // Group multiple benchmarks together
+
+  benchloop ({
+    name: 'Regular benchmark',
+    fn: () => {}
+  });
+
+  benchloop.skip ({ // Skip this benchmark
+    name: 'Skipped benchmark',
+    fn: () => {}
+  });
+
+  benchloop.only ({ // Execute only this benchmark
+    name: 'Only benchmark',
+    fn: () => {}
+  });
+
+});
+
+benchloop.summary (); // Display a summary
 ```
 
 Multiple kinds of outputs are supported, the screenshot above is the result of running [this](./test/index.js).
+
+The `benchloop` and `benchloop.group` functions support the optional `only` and `skip` methods, useful for quickly running benchmarks selectively.
 
 ## License
 
