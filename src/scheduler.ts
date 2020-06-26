@@ -70,6 +70,8 @@ const Scheduler = {
 
     });
 
+    Scheduler.queue = [];
+
   }
 
 };
