@@ -17,7 +17,7 @@ npm install --save-dev benchloop
 The following interface is provided:
 
 ```ts
-type LogType = 'chart' | 'extended' | 'compact' | false;
+type LogType = 'extended' | 'compact' | false;
 
 type Hook<CTX> = ( ctx: CTX ) => void;
 type HookAfter<CTX, DATA> = ( ctx: CTX, data: DATA ) => void;

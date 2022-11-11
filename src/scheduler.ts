@@ -1,18 +1,22 @@
 
 /* IMPORT */
 
-import {SchedulerOptions, SchedulerData} from './types';
 import Utils from './utils';
+import type {SchedulerOptions, SchedulerData} from './types';
 
-/* SCHEDULER */
+/* MAIN */
 
 const Scheduler = {
 
-  queue: [] as Partial<SchedulerOptions>[],
-  data: {} as SchedulerData,
+  /* VARIABLES */
+
+  queue: <Partial<SchedulerOptions>[]> [],
+  data: <SchedulerData> {},
   scheduled: false,
 
-  schedule ( options: Partial<SchedulerOptions> | SchedulerOptions['fn'] ): void {
+  /* API */
+
+  schedule: ( options: Partial<SchedulerOptions> | SchedulerOptions['fn'] ): void => {
 
     if ( Utils.isFunction ( options ) ) return Scheduler.schedule ({ fn: options });
 
@@ -32,7 +36,7 @@ const Scheduler = {
 
   },
 
-  run (): void {
+  run: (): void => {
 
     Scheduler.data = {
       skipped: 0,
@@ -60,7 +64,11 @@ const Scheduler = {
 
         Scheduler.data.queued++;
 
-        if ( data.skip ) return Scheduler.data.skipped++;
+        if ( data.skip ) {
+
+          return Scheduler.data.skipped++;
+
+        }
 
       }
 

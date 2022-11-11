@@ -1,33 +1,37 @@
 
-/* IMPORT */
-
-import now = require ( 'performance-now' );
-import * as pretty from 'pretty-ms';
-
-/* PROFILE */
+/* MAIN */
 
 const Profile = {
 
-  marks: {} as Record<string, number>,
+  /* VARIABLES */
 
-  time ( mark: string = '?' ): number {
+  marks: <Record<string, number>> {},
 
-    return Profile.marks[mark] = now ();
+  /* API */
 
-  },
+  time: ( mark: string = '?' ): number => {
 
-  timeEnd ( mark: string = '?' ): number {
-
-    return now () - Profile.marks[mark];
+    return Profile.marks[mark] = performance.now ();
 
   },
 
-  format ( time: number ): string {
+  timeEnd: ( mark: string = '?' ): number => {
 
-    return pretty ( time, {
-      compact: true,
-      formatSubMilliseconds: true
-    }).replace ( '~', '' );
+    return performance.now () - Profile.marks[mark];
+
+  },
+
+  format: ( time: number ): string => {
+
+    if ( time < 1 ) {
+
+      return `${Number ( time.toFixed ( 3 ).slice ( 2 ) )}µs`;
+
+    } else {
+
+      return `${Math.round ( time )}ms`;
+
+    }
 
   }
 

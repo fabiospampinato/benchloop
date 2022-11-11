@@ -1,19 +1,18 @@
 
 /* IMPORT */
 
-import merge from 'conf-merge';
-import {ProfileOptions, ProfileData} from './types';
 import Log from './log';
 import Profile from './profile';
 import Scheduler from './scheduler';
 import Utils from './utils';
+import type {ProfileOptions, ProfileData} from './types';
 
 /* BENCHLOOP */
 
 const defaultOptions: ProfileOptions<any> = {
   name: 'benchmark',
   iterations: 1000,
-  log: 'extended',
+  log: 'compact',
   groups: [],
   only: false,
   skip: false,
@@ -34,20 +33,20 @@ const groupOptions: Pick<ProfileOptions<any>, 'groups' | 'only' | 'skip'> = {
   skip: false
 };
 
-function benchloop<CTX = any> ( options: Partial<ProfileOptions<CTX>> | ProfileOptions<CTX>['fn'] ): void {
+const benchloop = <CTX = any> ( options: Partial<ProfileOptions<CTX>> | ProfileOptions<CTX>['fn'] ): void => {
 
   if ( Utils.isFunction ( options ) ) return benchloop ({ fn: options });
 
-  const opts: ProfileOptions<CTX> = merge ( {}, benchloop.defaultOptions, groupOptions, options );
+  const opts: ProfileOptions<CTX> = Object.assign ( {}, benchloop.defaultOptions, groupOptions, options );
 
-  function fn () {
+  const fn = () => {
 
-    const ctx: CTX = opts.ctx (),
-          {fn} = opts,
-          noop = ( ...args: any[] ) => {};
+    const ctx: CTX = opts.ctx ();
+    const {fn} = opts;
+    const noop = ( ..._: unknown[] ) => {};
 
-    let profile = 0,
-        profiles: number[] = [];
+    let profile = 0;
+    let profiles: number[] = [];
 
     if ( opts.before ) opts.before ( ctx );
 
@@ -83,7 +82,7 @@ function benchloop<CTX = any> ( options: Partial<ProfileOptions<CTX>> | ProfileO
 
     if ( opts.after ) opts.after ( ctx, data );
 
-    if ( opts.log ) Log.items.benchmark<CTX> ( data, opts.log );
+    if ( opts.log ) Log.benchmark<CTX> ( data, opts.log );
 
     return data;
 
@@ -96,15 +95,15 @@ function benchloop<CTX = any> ( options: Partial<ProfileOptions<CTX>> | ProfileO
     fn
   });
 
-}
+};
 
-benchloop.only = function only<CTX = any> ( options: Partial<ProfileOptions<CTX>> | Function ): void {
+benchloop.only = <CTX = any> ( options: Partial<ProfileOptions<CTX>> | Function ): void => {
 
   return benchloop ({ ...options, only: true });
 
 };
 
-benchloop.skip = function skip<CTX = any> ( options: Partial<ProfileOptions<CTX>> | Function ): void {
+benchloop.skip = <CTX = any> ( options: Partial<ProfileOptions<CTX>> | Function ): void => {
 
   return benchloop ({ ...options, skip: true });
 
@@ -112,7 +111,7 @@ benchloop.skip = function skip<CTX = any> ( options: Partial<ProfileOptions<CTX>
 
 /* GROUP */
 
-function group ( group: string, fn: Function ): void {
+const group = ( group: string, fn: Function ): void => {
 
   const {groups} = groupOptions;
 
@@ -122,9 +121,9 @@ function group ( group: string, fn: Function ): void {
 
   groupOptions.groups = groups;
 
-}
+};
 
-group.only = function only ( name: string, fn: Function ): void {
+group.only = ( name: string, fn: Function ): void => {
 
   const {only} = groupOptions;
 
@@ -136,7 +135,7 @@ group.only = function only ( name: string, fn: Function ): void {
 
 };
 
-group.skip = function skip ( name: string, fn: Function ): void {
+group.skip = ( name: string, fn: Function ): void => {
 
   const {skip} = groupOptions;
 
@@ -148,15 +147,15 @@ group.skip = function skip ( name: string, fn: Function ): void {
 
 };
 
-benchloop['group'] = group;
+benchloop.group = group;
 
 /* SUMMARY */
 
-benchloop.summary = function summary () {
+benchloop.summary = () => {
 
   Scheduler.schedule ({
     special: true,
-    fn: () => Log.items.summary ( Scheduler.data )
+    fn: () => Log.summary ( Scheduler.data )
   });
 
 };

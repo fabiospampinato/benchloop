@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-const {default: benchloop} = require ( '../dist' );
+import benchloop from '../dist/index.js';
 
 /* BENCHLOOP */
 
@@ -23,13 +23,7 @@ benchloop ({
   fn
 });
 
-benchloop ({
-  name: 'Chart',
-  log: 'chart',
-  fn
-});
-
-/* TEST SUITE-ish */
+/* TEST SUITE-ISH */
 
 // benchloop ({
 //   name: 'Default',

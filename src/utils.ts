@@ -1,11 +1,13 @@
 
-/* UTILS */
+/* MAIN */
 
 const Utils = {
 
-  isFunction ( x: any ): x is Function {
+  /* API */
 
-    return typeof x === 'function';
+  isFunction: ( value: unknown ): value is Function => {
+
+    return typeof value === 'function';
 
   }
 

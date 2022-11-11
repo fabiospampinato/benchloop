@@ -1,12 +1,12 @@
 
-/* TYPES */
+/* MAIN */
 
-type LogType = 'chart' | 'extended' | 'compact' | false;
+type LogType = 'extended' | 'compact' | false;
 
-type Hook<CTX> = ( ctx: CTX ) => void;
-type HookAfter<CTX, DATA> = ( ctx: CTX, data: DATA ) => void;
+type Hook<T> = ( ctx: T ) => void;
+type HookAfter<T, U> = ( ctx: T, data: U ) => void;
 
-type ProfileOptions<CTX> = {
+type ProfileOptions<T> = {
   name: string,
   iterations: number,
   log: LogType,
@@ -14,16 +14,16 @@ type ProfileOptions<CTX> = {
   only: boolean,
   skip: boolean,
   special: boolean,
-  before: Hook<CTX>,
-  beforeEach: Hook<CTX>,
-  after: HookAfter<CTX, ProfileData<CTX>>,
-  afterEach: Hook<CTX>,
-  ctx: () => CTX,
-  fn: ( ctx: CTX, iteration: number ) => void
+  before: Hook<T>,
+  beforeEach: Hook<T>,
+  after: HookAfter<T, ProfileData<T>>,
+  afterEach: Hook<T>,
+  ctx: () => T,
+  fn: ( ctx: T, iteration: number ) => void
 };
 
-type ProfileData<CTX> = {
-  options: ProfileOptions<CTX>,
+type ProfileData<T> = {
+  options: ProfileOptions<T>,
   iterations: number,
   elapsed: number,
   profiles: number[]
@@ -44,4 +44,4 @@ type SchedulerData = {
 
 /* EXPORT */
 
-export {LogType, ProfileOptions, ProfileData, SchedulerOptions, SchedulerData};
+export type {LogType, ProfileOptions, ProfileData, SchedulerOptions, SchedulerData};
