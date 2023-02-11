@@ -7,7 +7,7 @@ import Scheduler from './scheduler';
 import Utils from './utils';
 import type {ProfileOptions, ProfileData} from './types';
 
-/* BENCHLOOP */
+/* MAIN */
 
 const defaultOptions: ProfileOptions<any> = {
   name: 'benchmark',

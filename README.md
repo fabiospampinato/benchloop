@@ -1,8 +1,9 @@
-# Benchloop
 
 <p align="center">
   <img src="./resources/demo.png" width="631" alt="Demo">
 </p>
+
+# Benchloop
 
 Simple benchmarking library with a pretty output.
 
