@@ -20,7 +20,7 @@
     "performance"
   ],
   "dependencies": {
-    "tiny-colors": "^2.0.1"
+    "tiny-colors": "^2.0.2"
   },
   "devDependencies": {
     "tsex": "^2.1.0",
