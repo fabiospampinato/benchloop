@@ -160,6 +160,14 @@ benchloop.summary = () => {
 
 };
 
+/* CONFIG */
+
+benchloop.config = ( options: Partial<ProfileOptions<any>> ): void => {
+
+  Object.assign ( benchloop.defaultOptions, options );
+
+};
+
 /* DEFAULT OPTIONS */
 
 benchloop.defaultOptions = defaultOptions;
