@@ -2,7 +2,7 @@
   "name": "benchloop",
   "repository": "github:fabiospampinato/benchloop",
   "description": "Simple benchmarking library with a pretty output.",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "type": "module",
   "main": "dist/index.js",
   "exports": "./dist/index.js",
