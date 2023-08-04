@@ -1,8 +1,3 @@
-
-<p align="center">
-  <img src="./resources/demo.png" width="631" alt="Demo">
-</p>
-
 # Benchloop
 
 Simple benchmarking library with a pretty output.
@@ -93,8 +88,6 @@ benchloop.group ( 'MyGroup', () => { // Group multiple benchmarks together
 
 benchloop.summary (); // Display a summary
 ```
-
-Multiple kinds of outputs are supported, the screenshot above is the result of running [this](./test/index.js).
 
 The `benchloop` and `benchloop.group` functions support the optional `only` and `skip` methods, useful for quickly running benchmarks selectively.
 

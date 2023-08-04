@@ -4,7 +4,7 @@
 import Log from './log';
 import Profile from './profile';
 import Scheduler from './scheduler';
-import Utils from './utils';
+import {isFunction} from './utils';
 import type {ProfileOptions, ProfileData} from './types';
 
 /* MAIN */
@@ -35,7 +35,7 @@ const groupOptions: Pick<ProfileOptions<any>, 'groups' | 'only' | 'skip'> = {
 
 const benchloop = <CTX = any> ( options: Partial<ProfileOptions<CTX>> | ProfileOptions<CTX>['fn'] ): void => {
 
-  if ( Utils.isFunction ( options ) ) return benchloop ({ fn: options });
+  if ( isFunction ( options ) ) return benchloop ({ fn: options });
 
   const opts: ProfileOptions<CTX> = Object.assign ( {}, benchloop.defaultOptions, groupOptions, options );
 

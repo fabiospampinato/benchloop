@@ -1,7 +1,7 @@
 
 /* IMPORT */
 
-import Utils from './utils';
+import {isFunction} from './utils';
 import type {SchedulerOptions, SchedulerData} from './types';
 
 /* MAIN */
@@ -18,7 +18,7 @@ const Scheduler = {
 
   schedule: ( options: Partial<SchedulerOptions> | SchedulerOptions['fn'] ): void => {
 
-    if ( Utils.isFunction ( options ) ) return Scheduler.schedule ({ fn: options });
+    if ( isFunction ( options ) ) return Scheduler.schedule ({ fn: options });
 
     Scheduler.queue.push ( options );
 
