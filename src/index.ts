@@ -39,7 +39,7 @@ const benchloop = <CTX = any> ( options: Partial<ProfileOptions<CTX>> | ProfileO
 
   const opts: ProfileOptions<CTX> = Object.assign ( {}, benchloop.defaultOptions, groupOptions, options );
 
-  const fn = () => {
+  const fn = async () => {
 
     const ctx: CTX = opts.ctx ();
     const {fn} = opts;
@@ -56,13 +56,13 @@ const benchloop = <CTX = any> ( options: Partial<ProfileOptions<CTX>> | ProfileO
 
       Profile.time ();
 
-      noop ( ctx, i );
+      await noop ( ctx, i );
 
       const elapsedNoop = Profile.timeEnd ();
 
       Profile.time ();
 
-      fn ( ctx, i );
+      await fn ( ctx, i );
 
       const elapsed = Math.max ( 0, Profile.timeEnd () - elapsedNoop );
 

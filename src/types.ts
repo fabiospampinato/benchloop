@@ -33,7 +33,7 @@ type SchedulerOptions = {
   only: boolean,
   skip: boolean,
   special: boolean,
-  fn: () => ProfileData<any> | void
+  fn: () => Promise<ProfileData<any>> | ProfileData<any> | void
 };
 
 type SchedulerData = {

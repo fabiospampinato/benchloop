@@ -26,9 +26,9 @@ const Scheduler = {
 
     Scheduler.scheduled = true;
 
-    setTimeout ( () => {
+    setTimeout ( async () => {
 
-      Scheduler.run ();
+      await Scheduler.run ();
 
       Scheduler.scheduled = false;
 
@@ -36,7 +36,7 @@ const Scheduler = {
 
   },
 
-  run: (): void => {
+  run: async (): Promise<void> => {
 
     Scheduler.data = {
       skipped: 0,
@@ -56,9 +56,9 @@ const Scheduler = {
 
     }
 
-    Scheduler.queue.forEach ( data => {
+    for ( const data of Scheduler.queue ) {
 
-      if ( !data.fn ) return;
+      if ( !data.fn ) continue;
 
       if ( !data.special ) {
 
@@ -66,17 +66,19 @@ const Scheduler = {
 
         if ( data.skip ) {
 
-          return Scheduler.data.skipped++;
+          Scheduler.data.skipped++;
+
+          continue;
 
         }
 
       }
 
-      const profileData = data.fn ();
+      const profileData = await data.fn ();
 
       Scheduler.data.elapsed += profileData ? profileData.elapsed : 0;
 
-    });
+    }
 
     Scheduler.queue = [];
 
